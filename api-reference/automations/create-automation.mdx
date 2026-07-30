@@ -32,9 +32,9 @@ A definition **always replaces the whole automation** — it is never merged. A 
 | Trigger | `pieceName` / `triggerName` | Behavior |
 |---|---|---|
 | Webhook | `@activepieces/piece-webhook` / `catch_webhook` | You get a `webhook_url` to call from external systems. The payload arrives wrapped: reference fields as `{{trigger['body']['field']}}`. Tested synchronously with your `sample`. |
-| Phone call ended | `@autocalls/piece-autocalls` / `phoneCallEnded` | Requires `assistant_id`. Attached to the assistant after a green test. Payload fields live directly on the trigger: `{{trigger['extracted_variables']['x']}}`, `{{trigger['customer_phone']}}`, … |
-| Inbound call | `@autocalls/piece-autocalls` / `inboundCall` | Requires `assistant_id`. Runs before the assistant answers; must end in a respond step returning a flat map of strings. |
-| New conversation | `@autocalls/piece-autocalls` / `newConversation` | Requires `assistant_id`. |
+| Phone call ended | `@integration-tools/piece-voice` / `phoneCallEnded` | Requires `assistant_id`. Attached to the assistant after a green test. Payload fields live directly on the trigger: `{{trigger['extracted_variables']['x']}}`, `{{trigger['customer_phone']}}`, … |
+| Inbound call | `@integration-tools/piece-voice` / `inboundCall` | Requires `assistant_id`. Runs before the assistant answers; must end in a respond step returning a flat map of strings. |
+| New conversation | `@integration-tools/piece-voice` / `newConversation` | Requires `assistant_id`. |
 | Conversation ended | webhook trigger + `bind_webhook: "conversation_ended"` | Requires `assistant_id`. Fires when a chat ends; payload arrives wrapped, so reference fields through `{{trigger['body']['...']}}`. |
 | Schedule | `@activepieces/piece-schedule` / `every_x_minutes`, `every_day`, … | Cannot be fired on demand — activates armed as `active_untested`; the first scheduled run is the proof (check [runs](/api-reference/automations/list-automation-runs)). |
 | External integrations | the integration's own trigger (new spreadsheet row, new CRM contact, new lead, …) | Your connected account is attached automatically; if it is missing or expired you get a `needs_connection` / `needs_reconnection` error with the exact steps to fix it in the app. Activates as `active_untested`. |
